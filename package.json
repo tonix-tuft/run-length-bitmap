@@ -1,6 +1,6 @@
 {
   "name": "run-length-bitmap",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Useful operations for bitmap indexes and run-length encoded bitmaps.",
   "keywords": [
     "bitmap",
