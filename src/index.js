@@ -28,7 +28,7 @@ import { isObjectEmpty, objectMin, noOpFn } from "js-utl";
 /**
  * @type {number}
  */
-const MAX_SAFE_INT = 9007199254740991; // (2**53) - 1 (i.e. `Number.MAX_SAFE_INTEGER`)
+const MAX_SAFE_INT = 9_007_199_254_740_991; // (2**53) - 1 (i.e. `Number.MAX_SAFE_INTEGER`)
 
 /**
  * @type {Function}
