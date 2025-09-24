@@ -1,34 +1,27 @@
 {
-  "env": {
-    "module": {
-      "presets": [
-        [
-          "@babel/preset-env",
-          {
-            "targets": {
-              "node": "6.10"
-            },
-            "modules": false
-          }
-        ]
-      ],
-      "plugins": [
-        // ["@babel/plugin-proposal-decorators", { "legacy": true }],
-        // [
-        //   "@babel/plugin-proposal-decorators",
-        //   { "decoratorsBeforeExport": false }
-        // ],
-        "@babel/plugin-proposal-object-rest-spread",
-        "@babel/plugin-proposal-class-properties"
-        // , [
-        //   "@babel/plugin-transform-runtime",
-        //   {
-        //     "corejs": false,
-        //     "regenerator": true
-        //   }
-        // ]
-      ]
-    }
-  },
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "targets": { "node": "current" } // match Node used by Jest
+      }
+    ]
+  ],
+  "plugins": [
+    // ["@babel/plugin-proposal-decorators", { "legacy": true }],
+    // [
+    //   "@babel/plugin-proposal-decorators",
+    //   { "decoratorsBeforeExport": false }
+    // ],
+    "@babel/plugin-proposal-object-rest-spread",
+    "@babel/plugin-proposal-class-properties"
+    // , [
+    //   "@babel/plugin-transform-runtime",
+    //   {
+    //     "corejs": false,
+    //     "regenerator": true
+    //   }
+    // ]
+  ],
   "sourceMaps": true
 }

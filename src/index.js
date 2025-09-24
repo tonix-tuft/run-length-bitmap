@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Anton Bagdatyev (Tonix)
+ * Copyright (c) 2025 Anton Bagdatyev (Tonix)
  *
  * Permission is hereby granted, free of charge, to any person
  * obtaining a copy of this software and associated documentation
@@ -352,9 +352,6 @@ export const bitwiseNOT = bitmap => {
     resultBitmap[resultBitmap.length - 1] += remainingRightmostOnes;
   } else {
     resultBitmap.push(remainingRightmostOnes);
-  }
-  if ((resultBitmap.length - 1) % 2 === 0) {
-    resultBitmap.pop(); // Pop trailing zeros.
   }
   return resultBitmap;
 };
