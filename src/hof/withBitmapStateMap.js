@@ -18,12 +18,10 @@ const withBitmapStateMap = ({
       onBitmapWithoutSequenceOfBits(bitmap, index);
     } else {
       areAllBitmapsWithoutSequenceOfBits = false;
-      if (!map[index]) {
-        map[index] = {
-          i: 0,
-          bits: bitmap[0],
-        };
-      }
+      map[index] = {
+        i: 0,
+        bits: bitmap[0],
+      };
     }
   });
   if (areAllBitmapsWithoutSequenceOfBits) {

@@ -104,20 +104,13 @@ const bitwiseOR = (...bitmaps) => {
           }
         } while (map[otherIndex] && bitsToConsumeForCurrentBitmapState > 0);
       }
-      const lastResultBitmapIndex = resultBitmap.length - 1;
-      if (lastResultBitmapIndex % 2 === 1) {
-        resultBitmap[lastResultBitmapIndex] += bitsToConsume; // Add ones to previous chunk.
-      } else {
-        resultBitmap.push(bitsToConsume); // Add ones.
-      }
     } else {
       // Consume zeros.
-      resultBitmap.push(bitsToConsume); // Add zeros.
       for (const otherIndex in map) {
         map[otherIndex].bits -= bitsToConsume;
         if (map[otherIndex].bits <= 0) {
           // `map[otherIndex].bits` can never be less than 0 at this point
-          // (it's an invariant because the minimum `map[index].bits` was the minimum value).
+          // (it's an invariant because the minimum `map[index].bits`, i.e. `bitsToConsume`, was the minimum value).
           map[otherIndex].i++;
           if (typeof bitmaps[otherIndex][map[otherIndex].i] !== "undefined") {
             map[otherIndex].bits = bitmaps[otherIndex][map[otherIndex].i];
@@ -127,6 +120,16 @@ const bitwiseOR = (...bitmaps) => {
         }
       }
     }
+
+    // Determine which chunk of the result bitmap to update, and whether ones or zeros have to be added or incremented,
+    // depending on the current last index of the `resultBitmap`.
+    const lastResultBitmapIndex = resultBitmap.length - 1;
+    if (lastResultBitmapIndex % 2 === (shouldConsumeOnes ? 1 : 0)) {
+      resultBitmap[lastResultBitmapIndex] += bitsToConsume; // Add ones (or zeros) to previous chunk.
+    } else {
+      resultBitmap.push(bitsToConsume); // Add ones (or zeros).
+    }
+
     map[index] = bitmapState;
     map[index].i++;
     if (typeof bitmaps[index][map[index].i] !== "undefined") {

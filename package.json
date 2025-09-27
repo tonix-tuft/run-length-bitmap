@@ -36,6 +36,7 @@
   "scripts": {
     "test": "jest",
     "test-coverage": "jest --coverage",
+    "jest-clear-cache": "jest --clearCache",
     "watch": "WEBPACK_ENV=watch webpack --progress --color --watch",
     "mkdir-build": "mkdir -p ./dist/es6",
     "clear-build": "find ./dist ! -name '.gitignore' -type f -exec rm -f {} +",
@@ -46,7 +47,7 @@
     "publish-patch": "npm run build-all && npm version patch && npm run publish-git",
     "publish-minor": "npm run build-all && npm version minor && npm run publish-git",
     "publish-major": "npm run build-all && npm version major && npm run publish-git",
-    "build-module": "cross-env BABEL_ENV=module ./node_modules/.bin/babel ./src --out-dir ./dist/es6 --source-maps --copy-files"
+    "build-module": "cross-env BABEL_ENV=module ./node_modules/.bin/babel ./src --out-dir ./dist/es6 --source-maps --copy-files && find ./dist/es6 -name '*.test.js' -type f -delete"
   },
   "devDependencies": {
     "@babel/cli": "^7.12.1",
