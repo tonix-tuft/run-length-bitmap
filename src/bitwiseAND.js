@@ -29,15 +29,18 @@ import withBitmapStateMap from "./hof/withBitmapStateMap";
  *
  */
 const bitwiseAND = (...bitmaps) => {
-  let isThereABitmapWithoutASequenceOfBits = false;
+  let isThereABitmapWithoutSequenceOfBits = false;
+
   const func = withBitmapStateMap({
     bitmaps,
     onBitmapWithoutSequenceOfBits: () =>
-      (isThereABitmapWithoutASequenceOfBits = true),
+      (isThereABitmapWithoutSequenceOfBits = true),
   });
-  if (isThereABitmapWithoutASequenceOfBits) {
+
+  if (isThereABitmapWithoutSequenceOfBits) {
     return [];
   }
+
   const resultBitmap = func(({ map, resultBitmap }) => {
     // An iteration of the internal while loop of the function returned by `withBitmapStateMap`.
     const { key: index, value: bitmapState } = objectMin(map, {

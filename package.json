@@ -27,6 +27,7 @@
     },
     "collectCoverageFrom": [
       "!./coverage/**",
+      "!./dist/**",
       "!./*.js",
       "!src/**/__snapshots__/**/*",
       "!src/**/__mocks__/**/*"

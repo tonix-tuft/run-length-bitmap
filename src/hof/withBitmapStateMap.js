@@ -6,21 +6,30 @@ import { isObjectEmpty, noOpFn } from "js-utl";
 const withBitmapStateMap = ({
   bitmaps,
   onBitmapWithoutSequenceOfBits = noOpFn,
+  onAllBitmapsWithoutSequenceOfBits = noOpFn,
 }) => {
   let resultBitmap = [];
   const map = {};
+
+  let areAllBitmapsWithoutSequenceOfBits = true;
   bitmaps.map((bitmap, index) => {
-    const hasAtLeastOneSequenceOfBits = typeof bitmap[0] !== "undefined";
+    const hasAtLeastOneSequenceOfBits = bitmap.length > 1;
     if (!hasAtLeastOneSequenceOfBits) {
       onBitmapWithoutSequenceOfBits(bitmap, index);
-    }
-    if (!map[index] && hasAtLeastOneSequenceOfBits) {
-      map[index] = {
-        i: 0,
-        bits: bitmap[0],
-      };
+    } else {
+      areAllBitmapsWithoutSequenceOfBits = false;
+      if (!map[index]) {
+        map[index] = {
+          i: 0,
+          bits: bitmap[0],
+        };
+      }
     }
   });
+  if (areAllBitmapsWithoutSequenceOfBits) {
+    onAllBitmapsWithoutSequenceOfBits();
+  }
+
   return callback => {
     while (!isObjectEmpty(map)) {
       const result = callback({ map, resultBitmap });
