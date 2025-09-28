@@ -108,7 +108,7 @@ const bitwiseAND = (...bitmaps) => {
         map[otherIndex].bits -= bitsToConsume;
         if (map[otherIndex].bits <= 0) {
           // `map[otherIndex].bits` can never be less than 0 at this point
-          // (it's an invariant because the minimum `map[index].bits` was the minimum value).
+          // (it's an invariant because the minimum `map[index].bits`, i.e. `bitsToConsume`, was the minimum value).
           map[otherIndex].i++;
           if (typeof bitmaps[otherIndex][map[otherIndex].i] !== "undefined") {
             map[otherIndex].bits = bitmaps[otherIndex][map[otherIndex].i];

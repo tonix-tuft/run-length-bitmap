@@ -261,6 +261,26 @@ const testCases = [
   ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾ 7838291893 ‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾‾
 `,
   },
+  {
+    name: "Bitmap with trailing zeros to set in the bitmap state map when switching to the next index/set of bits in the bitmap when computing the AND between the bitmaps.",
+    bitmaps: [
+      [1, 2, 3],
+      [1, 2, 4, 1],
+    ],
+    expectedOR: [1, 2, 4, 1],
+    expectedAND: [1, 2],
+    expectedXOR: [7, 1],
+  },
+  {
+    name: "Bitmaps with trailing zeros to consume and no more bits when switching to the next index/set of bits in the bitmap when computing the OR between the bitmaps.",
+    bitmaps: [
+      [1, 2, 3],
+      [1, 3, 2],
+    ],
+    expectedOR: [1, 3],
+    expectedAND: [1, 2],
+    expectedXOR: [3, 1],
+  },
 ];
 
 /**
@@ -276,148 +296,106 @@ const bitwiseNOTTestCases = [
     name: "Case 1.",
     bitmap: [10, 2],
     expectedNOT: [0, 10, 2, 9_007_199_254_740_991 - 10 - 2],
-    detail: `
-`,
   },
   {
     name: "Case 2.",
     bitmap: [15, 1],
     expectedNOT: [0, 15, 1, 9_007_199_254_740_991 - 15 - 1],
-    detail: `
-`,
   },
   {
     name: "Case 3.",
     bitmap: [0, 4, 12, 2],
     expectedNOT: [4, 12, 2, 9_007_199_254_740_991 - 4 - 12 - 2],
-    detail: `
-`,
   },
   {
     name: "Case 4.",
     bitmap: [0, 4, 6, 2, 3, 3],
     expectedNOT: [4, 6, 2, 3, 3, 9_007_199_254_740_991 - 4 - 6 - 2 - 3 - 3],
-    detail: `
-`,
   },
   {
     name: "Case 5.",
     bitmap: [0, 4],
     expectedNOT: [4, 9_007_199_254_740_991 - 4],
-    detail: `
-`,
   },
   {
     name: "Case 6.",
     bitmap: [2, 4],
     expectedNOT: [0, 2, 4, 9_007_199_254_740_991 - 2 - 4],
-    detail: `
-`,
   },
   {
     name: "Case 7.",
     bitmap: [0, 6],
     expectedNOT: [6, 9_007_199_254_740_991 - 6],
-    detail: `
-`,
   },
   {
     name: "Case 8.",
     bitmap: [2, 2],
     expectedNOT: [0, 2, 2, 9_007_199_254_740_991 - 2 - 2],
-    detail: `
-`,
   },
   {
     name: "Case 9.",
     bitmap: [0, 2, 2, 2],
     expectedNOT: [2, 2, 2, 9_007_199_254_740_991 - 2 - 2 - 2],
-    detail: `
-`,
   },
   {
     name: "Case 10.",
     bitmap: [5, 1],
     expectedNOT: [0, 5, 1, 9_007_199_254_740_991 - 5 - 1],
-    detail: `
-`,
   },
   {
     name: "Case 11.",
     bitmap: [0, 8],
     expectedNOT: [8, 9_007_199_254_740_991 - 8],
-    detail: `
-`,
   },
   {
     name: "Case 12.",
     bitmap: [4, 2],
     expectedNOT: [0, 4, 2, 9_007_199_254_740_991 - 4 - 2],
-    detail: `
-`,
   },
   {
     name: "Case 13.",
     bitmap: [0, 1],
     expectedNOT: [1, 9_007_199_254_740_991 - 1],
-    detail: `
-`,
   },
   {
     name: "Case 14.",
     bitmap: [0, 16],
     expectedNOT: [16, 9_007_199_254_740_991 - 16],
-    detail: `
-`,
   },
   {
     name: "Case 15.",
     bitmap: [8, 8],
     expectedNOT: [0, 8, 8, 9_007_199_254_740_991 - 8 - 8],
-    detail: `
-`,
   },
   {
     name: "Case 16.",
     bitmap: [6, 2],
     expectedNOT: [0, 6, 2, 9_007_199_254_740_991 - 6 - 2],
-    detail: `
-`,
   },
   {
     name: "Case 17.",
     bitmap: [1, 1],
     expectedNOT: [0, 1, 1, 9_007_199_254_740_991 - 1 - 1],
-    detail: `
-`,
   },
   {
     name: "Case 18.",
     bitmap: [0, 1, 1, 1],
     expectedNOT: [1, 1, 1, 9_007_199_254_740_991 - 1 - 1 - 1],
-    detail: `
-`,
   },
   {
     name: "Case 19.",
     bitmap: [2, 1],
     expectedNOT: [0, 2, 1, 9_007_199_254_740_991 - 2 - 1],
-    detail: `
-`,
   },
   {
     name: "Case 20.",
     bitmap: [],
     expectedNOT: [0, 9_007_199_254_740_991],
-    detail: `
-`,
   },
   {
     name: "Case 21 - Trailing zeros 1.",
     bitmap: [1001, 2, 98],
     expectedNOT: [0, 1001, 2, 9_007_199_254_740_991 - 1001 - 2],
-    detail: `
-`,
   },
   {
     name: "Case 22 - Trailing zeros 2.",
@@ -432,15 +410,11 @@ const bitwiseNOTTestCases = [
       6,
       9_007_199_254_740_991 - 1 - 2 - 3 - 4 - 5 - 6,
     ],
-    detail: `
-`,
   },
   {
     name: "Case 23 - Trailing zeros 3 - Leading ones.",
     bitmap: [0, 632, 8],
     expectedNOT: [632, 9_007_199_254_740_991 - 632],
-    detail: `
-`,
   },
 ];
 
