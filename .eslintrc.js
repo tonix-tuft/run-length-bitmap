@@ -5,6 +5,7 @@ module.exports = {
     browser: true,
     commonjs: true,
     node: true,
+    "jest/globals": true,
   },
   extends: [
     "eslint:recommended",
@@ -22,9 +23,10 @@ module.exports = {
     ecmaVersion: 2018,
     sourceType: "module",
   },
-  plugins: ["@typescript-eslint"],
+  plugins: ["@typescript-eslint", "jest"],
   rules: {
     "no-unused-vars": ["error", { ignoreRestSiblings: true }],
+    "no-useless-escape": "off",
     "no-console": "error",
     "@typescript-eslint/explicit-function-return-type": "off",
     "@typescript-eslint/no-unused-vars": "off",
