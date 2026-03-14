@@ -47,6 +47,9 @@
     "publish-patch": "npm run build-all && npm version patch && npm run publish-git",
     "publish-minor": "npm run build-all && npm version minor && npm run publish-git",
     "publish-major": "npm run build-all && npm version major && npm run publish-git",
+    "login-publish-patch": "npm login && npm run build-all && npm version patch && npm run publish-git",
+    "login-publish-minor": "npm login && npm run build-all && npm version minor && npm run publish-git",
+    "login-publish-major": "npm login && npm run build-all && npm version major && npm run publish-git",
     "build-module": "cross-env BABEL_ENV=module ./node_modules/.bin/babel ./src --out-dir ./dist/es6 --source-maps --copy-files && find ./dist/es6 -name '*.test.js' -type f -delete"
   },
   "devDependencies": {
